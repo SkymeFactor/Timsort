@@ -12,7 +12,7 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
-#include "Timsort.h"
+#include "src/Timsort.h"
 
 enum state_t { sorted, randomized, reversed };
 
@@ -85,6 +85,13 @@ static void bench(int size, state_t const state) {
     }
 
     {
+        std::vector<value_t> c(a);
+
+        for (int i = 0; i < 100; ++i) {
+            std::copy(a.begin(), a.end(), c.begin());
+            std::sort(c.begin(), c.end());
+        }
+
         std::vector<value_t> b(a);
 
         std::clock_t start = std::clock();
@@ -93,6 +100,13 @@ static void bench(int size, state_t const state) {
             timsort(b, b.size());
         }
         std::clock_t stop = std::clock();
+        for (int it = 0; it < c.size(); it++){
+            if (b[it] != c[it]){
+                std::cerr << "array is different!\n";
+                break;
+            }
+        }
+        
 
         std::cerr << "timsort          " << (double(stop - start) / CLOCKS_PER_SEC) << std::endl;
     }

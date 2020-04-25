@@ -1,2 +1,2 @@
 # Timsort
-Small and naive version of Timsort algorithm
+A _small_ and naive version of Timsort algorithm
